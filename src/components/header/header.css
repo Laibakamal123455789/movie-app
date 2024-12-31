@@ -1,0 +1,56 @@
+/* Navbar customizations */
+.navbar {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-nav {
+  margin-left: 10px;
+}
+
+.navbar-nav .nav-item .nav-link {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  background-color: #e9ecef;
+}
+
+.form-inline {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.form-control {
+  width: 200px;
+  margin-right: 0.5rem;
+}
+
+.btn-outline-success {
+  border-radius: 20px;
+}
+
+/* For smaller screen devices */
+@media (max-width: 768px) {
+  .form-inline {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .navbar .navbar-brand {
+    font-size: 1.3rem;
+  }
+
+  .navbar-nav {
+    margin-left: 0;
+  }
+}
