@@ -3,14 +3,11 @@ import './Footer.css'
 export default function Footer() {
   return (
     <>
-  {/* Remove the container if you want to extend the Footer to full width. */}
   <div className="container my-">
     <footer className="text-center text-lg-start border border-white mt-xl-5 pt-4">
-      {/* Grid container */}
-      <div className="container p-4">
-        {/*Grid row*/}
-        <div className="row">
-          {/*Grid column*/}
+        <div className="container p-4">
+         <div className="row">
+         
           <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <h5 className="text-uppercase mb-4">OUR WORLD</h5>
             <ul className="list-unstyled mb-4">
@@ -36,8 +33,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          {/*Grid column*/}
-          {/*Grid column*/}
           <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <h5 className="text-uppercase mb-4">Assistance</h5>
             <ul className="list-unstyled">
@@ -68,8 +63,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          {/*Grid column*/}
-          {/*Grid column*/}
           <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <h5 className="text-uppercase mb-4">Careers</h5>
             <ul className="list-unstyled">
@@ -80,36 +73,29 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          {/*Grid column*/}
-          {/*Grid column*/}
           <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <h5 className="text-uppercase mb-4">Sign up to our newsletter</h5>
             <div className="form-outline form-white mb-4">
-              <input type="email" id="form5Example2" className="form-control" />
               <label className="form-label" htmlFor="form5Example2">
                 Email address
               </label>
+              <input type="email" id="form5Example2" className="form-control" />
             </div>
             <button type="submit" className="btn btn-outline-white btn-block">
               Subscribe
             </button>
           </div>
-          {/*Grid column*/}
         </div>
-        {/*Grid row*/}
       </div>
-      {/* Grid container */}
-      {/* Copyright */}
+
       <div className="text-center p-3 border-top border-white">
         © 2020 Copyright:
-        <a className="text-white" href="https://mdbootstrap.com/">
-          MDBootstrap.com
+        <a className="text-white" href="/">
+          JustWatch.com
         </a>
       </div>
-      {/* Copyright */}
     </footer>
   </div>
-  {/* End of .container */}
 </>
 
   )

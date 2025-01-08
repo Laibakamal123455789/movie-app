@@ -18,10 +18,8 @@ export default function ActionMovies({ genre, apiKey }) {
   useEffect(() => {
     fetchMovies();
   }, []);
-
-  if (loading) return <h2>Loading Comedy Movies...</h2>;
-
   
+  if (loading) return <h2>Loading Action Movies...</h2>
   const settings = {
     dots: true,
     infinite: true,

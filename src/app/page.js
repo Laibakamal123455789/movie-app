@@ -1,4 +1,4 @@
-import ActionMovies from "@/components/Action-movies/action";
+import ActionMovies from "@/components/movies/Action-movies/action";
 import HeroSection from "@/components/Hero-section/section";
 import Movie from "@/components/movies/movie";
 import "slick-carousel/slick/slick.css";

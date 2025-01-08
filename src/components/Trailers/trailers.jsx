@@ -1,21 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
 import "./Trailers.css";
+import { BASE_URL,API_KEY } from "@/lib/apiConfig";
 
 export default function Trailers() {
   const [trailers, setTrailers] = useState([]);
   const [selectedTrailer, setSelectedTrailer] = useState(null);
-  const API_KEY = "62ba84da719c3812b6d078e3f7c2e4f1";
-
 
   const fetchTrailers = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+      `${BASE_URL}/movie/popular?api_key=${API_KEY}`
     );
     const movies = await response.json();
     const trailerPromises = movies.results.slice(0, 10).map(async (movie) => {
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`
+        `${BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}`
       );
       const data = await res.json();
       const trailer = data.results.find((video) => video.type === "Trailer");

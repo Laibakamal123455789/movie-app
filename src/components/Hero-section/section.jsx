@@ -1,16 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
-
 import "./HeroSection.css";
 import { addToFavourite } from "@/store/slices/moviesSlice";
 import { Provider, useDispatch } from "react-redux";
 import { meraStore } from "@/store/store";
+import { BASE_URL,API_KEY } from "@/lib/apiConfig";
 
-export default function Page(){
-  return <Provider store={meraStore}>
-    <HeroSection/>
-  </Provider>
+export default function Page() {
+  return (
+    <Provider store={meraStore}>
+      <HeroSection />
+    </Provider>
+  );
 }
 
 function HeroSection() {
@@ -18,22 +20,17 @@ function HeroSection() {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState(null);
-  const API_KEY = "62ba84da719c3812b6d078e3f7c2e4f1";
 
-  const dispatch = useDispatch(); // Initialize Redux dispatch
+  const dispatch = useDispatch(); 
 
   const fetchMovies = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-    );
+    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
     const data = await response.json();
-    setMovies(data.results.slice(0, 5)); // Limit to 5 movies for slider
+    setMovies(data.results.slice(0, 10)); 
   };
 
   const fetchTrailer = async (movieId) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
-    );
+    const response = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`);
     const data = await response.json();
     const trailer = data.results.find((video) => video.type === "Trailer");
     return trailer ? `https://www.youtube.com/embed/${trailer.key}` : null;
@@ -67,7 +64,7 @@ function HeroSection() {
     fade: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    beforeChange: (_, next) => setCurrentMovieIndex(next), 
+    beforeChange: (_, next) => setCurrentMovieIndex(next),
   };
 
   if (movies.length === 0) return <div>Loading...</div>;
@@ -77,11 +74,10 @@ function HeroSection() {
   const handleAddToList = () => {
     if (currentMovie) {
       dispatch(addToFavourite(currentMovie));
-   console.log("yes")
+      console.log("yes");
       alert(`${currentMovie.title} added to your list!`);
     }
   };
-  
 
   return (
     <div className="hero-container">

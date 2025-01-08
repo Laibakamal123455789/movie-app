@@ -2,18 +2,15 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "./TrendsNow.css";
+import { BASE_URL, API_KEY } from "@/lib/apiConfig";
 
-const API_KEY = "62ba84da719c3812b6d078e3f7c2e4f1";
-
-const TrendsNow = () => {
+export default function TrendsNow() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Action");
   const [movies, setMovies] = useState([]);
 
   const fetchGenres = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
-    );
+    const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
     const data = await response.json();
     setCategories(
       data.genres.filter((genre) =>
@@ -25,9 +22,7 @@ const TrendsNow = () => {
   };
 
   const fetchMoviesByGenre = async (genreId) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`
-    );
+    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
     const data = await response.json();
     setMovies(data.results);
   };
@@ -116,6 +111,4 @@ const TrendsNow = () => {
       )}
     </div>
   );
-};
-
-export default TrendsNow;
+}

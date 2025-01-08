@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "./Movie.css";
-
-const API_KEY = "62ba84da719c3812b6d078e3f7c2e4f1";
+import { BASE_URL,API_KEY } from "@/lib/apiConfig";
 
 export default function Movie() {
   const [categories, setCategories] = useState([]);
@@ -12,9 +11,7 @@ export default function Movie() {
 
   // Fetch genres
   const fetchGenres = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
-    );
+    const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
     const data = await response.json();
     setCategories(
       data.genres.filter((genre) =>
@@ -26,9 +23,7 @@ export default function Movie() {
   };
 
   const fetchMoviesByGenre = async (genreId) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`
-    );
+    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
     const data = await response.json();
     setMovies(data.results);
   };
@@ -76,17 +71,22 @@ export default function Movie() {
   };
 
   return (
-    <div className="movie-page" style={{backgroundColor:"  #f5f5f5"}}>
+    <div className="movie-page" style={{ backgroundColor: "#f5f5f5" }}>
       <h2>Movies by Category</h2>
-      <hr style={{width:"350px" , justifyContent: "center ", margin: "auto" , marginBottom :"40px"}}></hr>
+      <hr
+        style={{
+          width: "350px",
+          justifyContent: "center",
+          margin: "auto",
+          marginBottom: "40px",
+        }}
+      ></hr>
       <div className="filter-buttons">
         {categories.map((category) => (
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.name)}
-            className={`filter-button ${
-              selectedCategory === category.name ? "active" : ""
-            }`}
+            className={`filter-button ${selectedCategory === category.name ? "active" : ""}`}
           >
             {category.name}
           </button>
