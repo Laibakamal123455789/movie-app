@@ -95,7 +95,7 @@ export default function Movie() {
       {movies.length > 0 ? (
         <Slider {...sliderSettings}>
           {movies.map((movie) => (
-          <Link key={movie.id} href={`/movie/${movie.id}`}>
+          <Link key={movie.id} href={`/movies/${movie.id}`}>
 
             <div className="movie-card">
               <img
