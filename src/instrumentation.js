@@ -1,8 +1,6 @@
+import { connectKaro } from "./app/db/db";
 
-import dbConnect, { connectKaro } from "./app/db/dbConnect";
-
-
-export function register(){
-  dbConnect();
-  console.log("code touch register");
+export function register() {
+  connectKaro();
+  console.log("Register function executed");
 }

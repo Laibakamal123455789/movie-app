@@ -2,26 +2,15 @@
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "./HeroSection.css";
-import { addToFavourite } from "@/store/slices/moviesSlice";
-import { Provider, useDispatch } from "react-redux";
-import { meraStore } from "@/store/store";
 import { BASE_URL,API_KEY } from "@/lib/apiConfig";
 
-export default function Page() {
-  return (
-    <Provider store={meraStore}>
-      <HeroSection />
-    </Provider>
-  );
-}
-
-function HeroSection() {
+export default function HeroSection() {
   const [movies, setMovies] = useState([]);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState(null);
 
-  const dispatch = useDispatch(); 
+
 
   const fetchMovies = async () => {
     const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
@@ -73,7 +62,7 @@ function HeroSection() {
 
   const handleAddToList = () => {
     if (currentMovie) {
-      dispatch(addToFavourite(currentMovie));
+      // dispatch(addToFavourite(currentMovie));
       console.log("yes");
       alert(`${currentMovie.title} added to your list!`);
     }

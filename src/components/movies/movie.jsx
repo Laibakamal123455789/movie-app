@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "./Movie.css";
 import { BASE_URL,API_KEY } from "@/lib/apiConfig";
+import Link from "next/link";
 
 export default function Movie() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Action");
   const [movies, setMovies] = useState([]);
 
-  // Fetch genres
   const fetchGenres = async () => {
     const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
     const data = await response.json();
@@ -80,14 +80,14 @@ export default function Movie() {
           margin: "auto",
           marginBottom: "40px",
         }}
-      ></hr>
+        ></hr>
       <div className="filter-buttons">
         {categories.map((category) => (
           <button
-            key={category.id}
+          key={category.id}
             onClick={() => setSelectedCategory(category.name)}
             className={`filter-button ${selectedCategory === category.name ? "active" : ""}`}
-          >
+            >
             {category.name}
           </button>
         ))}
@@ -95,12 +95,14 @@ export default function Movie() {
       {movies.length > 0 ? (
         <Slider {...sliderSettings}>
           {movies.map((movie) => (
-            <div key={movie.id} className="movie-card">
+          <Link key={movie.id} href={`/movie/${movie.id}`}>
+
+            <div className="movie-card">
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="movie-image"
-              />
+                />
               <div className="movie-details">
                 <h3>{movie.title}</h3>
                 <div className="para">
@@ -109,11 +111,13 @@ export default function Movie() {
                 </div>
               </div>
             </div>
+          </Link>
           ))}
         </Slider>
       ) : (
         <p className="no-movies">Select a category to see movies!</p>
       )}
+      
     </div>
   );
 }
