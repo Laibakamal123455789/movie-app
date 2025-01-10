@@ -75,7 +75,7 @@ function Wishlist() {
       );
 
       console.log("Response:", response.data);
-      dispatch(addToFavourites(movie)); 
+      dispatch(addToFavourites(movie)); // Update the Redux state with new movie
       alert(`${movie.title} added to your wishlist!`);
     } catch (error) {
       console.error("Error response:", error.response);

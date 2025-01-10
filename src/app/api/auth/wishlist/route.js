@@ -1,9 +1,7 @@
 import { User } from "@/models/userModel"; 
 import jwt from "jsonwebtoken";
 import { connectKaro } from "@/app/db/db"; 
-
 export async function GET(req, res) {
-  
   await connectKaro(); 
 
   try {
@@ -55,9 +53,9 @@ export async function POST(req, res) {
     }
 
     user.favouriteMovies.push(movie); 
-    await user.save(); 
+    await user.save(); // Save updated user
 
-    return res.status(200).json({ favouriteMovies: user.favouriteMovies }); 
+    return res.status(200).json({ favouriteMovies: user.favouriteMovies }); // Return updated wishlist
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Error adding movie to wishlist" });
