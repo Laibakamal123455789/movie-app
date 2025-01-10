@@ -46,7 +46,7 @@ function Header() {
                 </Link>
               </li>
               <li>
-                <Link className="nav-link" href="/addToFavourite">
+                <Link className="nav-link" href="/favouritesMovie">
                   WishList     
                 </Link>
               </li>
@@ -58,6 +58,7 @@ function Header() {
                   SignUp
                 </Link>
               </li>
+              
               <li className="nav-item">
                 <Link className="nav-link" href="/login">
                   Login

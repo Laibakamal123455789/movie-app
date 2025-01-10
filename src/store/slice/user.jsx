@@ -8,7 +8,7 @@ export let userWalaSlice = createSlice({
   },
   reducers: {
     addUser: (state, action) => {
-      console.log("Logged in user:", action.payload);
+      // console.log("Logged in user:", action.payload);
       state.currentUser = action.payload;
       state.isAuthenticated = true; 
     },

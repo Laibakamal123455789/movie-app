@@ -10,7 +10,9 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to bottom, #ffffff, #d1eaff);
+    background: linear-gradient(to bottom, #f5eeee, #201e1ec9);
+
+    /* background: linear-gradient(to bottom, #ffffff, #d1eaff); */
   }
   
   .signup-form {
@@ -45,7 +47,7 @@ body {
   }
   
   .submit-button {
-    background-color: #007bff;
+    background-color: black;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -57,9 +59,11 @@ body {
   }
   
   .submit-button:hover {
-    background-color: #0056b3;
+    background-color: rgb(73, 71, 71);
   }
-  
+  .login-link{
+    color: red;
+  }
   @media screen and (max-width: 480px) {
     .signup-form {
       padding: 20px 30px;

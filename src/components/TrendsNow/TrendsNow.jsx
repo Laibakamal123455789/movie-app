@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "./TrendsNow.css";
 import { BASE_URL, API_KEY } from "@/lib/apiConfig";
+import Link from "next/link";
 
 export default function TrendsNow() {
   const [categories, setCategories] = useState([]);
@@ -90,11 +91,13 @@ export default function TrendsNow() {
         <Slider {...sliderSettings}>
           {movies.map((movie) => (
             <div key={movie.id} className="movie-card">
+              <Link key={movie.id} href={`/movies/${movie.id}`}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="movie-image"
               />
+              </Link>
               <div className="movie-details">
                 <h3>{movie.title}</h3>
                 <div className="para">

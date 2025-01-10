@@ -1,8 +1,12 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Slider from "react-slick";
+import {jwtDecode} from "jwt-decode";
+
 import "./HeroSection.css";
-import { BASE_URL,API_KEY } from "@/lib/apiConfig";
+import { BASE_URL, API_KEY } from "@/lib/apiConfig";
 
 export default function HeroSection() {
   const [movies, setMovies] = useState([]);
@@ -10,12 +14,16 @@ export default function HeroSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState(null);
 
-
+  const router = useRouter();
 
   const fetchMovies = async () => {
-    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
-    const data = await response.json();
-    setMovies(data.results.slice(0, 10)); 
+    try {
+      const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
+      const data = await response.json();
+      setMovies(data.results.slice(0, 10));
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
 
   const fetchTrailer = async (movieId) => {
@@ -56,17 +64,44 @@ export default function HeroSection() {
     beforeChange: (_, next) => setCurrentMovieIndex(next),
   };
 
-  if (movies.length === 0) return <div>Loading...</div>;
-
   const currentMovie = movies[currentMovieIndex];
 
   const handleAddToList = () => {
-    if (currentMovie) {
-      // dispatch(addToFavourite(currentMovie));
-      console.log("yes");
-      alert(`${currentMovie.title} added to your list!`);
+    const token = localStorage.getItem("token");
+  
+    if (token) {
+      try {
+        const decodedToken = jwtDecode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2QwYTgxZTZkNTA3NjcxNWMzOTFkNSIsImlhdCI6MTczNjQ5NzM2NX0.gwaQ3cZXJeGeRRV_ucMSeL2ULaU4qcfsfCtB_c8RvkE');
+        console.log("Decoded Token:", decodedToken); // Debugging: log decoded token
+  
+        // Check if token has expired
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (decodedToken.exp && decodedToken.exp < currentTime) {
+          alert("Session expired. Please log in again.");
+          console.log("Redirecting to login...");
+          router.push("/login");
+          return;
+        }
+  
+        // If the token is valid, proceed
+        alert(`${currentMovie.title} added to your wishlist!`);
+  
+      } catch (error) {
+        // Handle invalid token error
+        console.error("Invalid token:", error);
+        alert("Invalid session. Please log in.");
+        router.push("/login");
+      }
+    } else {
+      // No token, ask the user to log in or sign up
+      alert("Please log in or sign up to add movies to your wishlist.");
+      console.log("Redirecting to signup...");
+      router.push("/signup");
     }
   };
+  
+
+  if (movies.length === 0) return <div>Loading...</div>;
 
   return (
     <div className="hero-container">
@@ -115,7 +150,7 @@ export default function HeroSection() {
               Watch
             </button>
             <button className="hero-button add" onClick={handleAddToList}>
-              Add to List
+              Add to Wishlist
             </button>
           </div>
         </div>

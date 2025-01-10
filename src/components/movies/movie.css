@@ -1,4 +1,4 @@
-/* Page container styles */
+
 .movie-page {
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -6,13 +6,12 @@
     overflow: hidden;
   }
   
-  /* Section title */
   .movie-page h2 {
     text-align: center;
     margin-bottom: 20px;
   }
   
-  /* Filter button styles */
+  
   .filter-buttons {
     display: flex;
     gap: 10px;
@@ -34,7 +33,7 @@
     background-color: red;
   }
   
-  /* Slider container */
+ 
   .slick-slider {
     margin: 20px 0;
   }
