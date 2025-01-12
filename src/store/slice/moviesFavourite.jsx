@@ -7,10 +7,23 @@ export let movieSlice = createSlice({
   },
   reducers: {
     addToFavourites: (state, action) => {
-      state.favouriteMovies.push(action.payload);
+      const movie = {
+        movieId: action.payload.movieId || Math.random().toString(36).substring(7),
+        title: action.payload.title || "Unknown Title",
+        imageUrl: action.payload.imageUrl || "https://via.placeholder.com/150",
+        rating: action.payload.rating || "N/A", // Default value for rating
+        addedBy: action.payload.addedBy || "Unknown", // Default value for addedBy
+      };
+      state.favouriteMovies.push(movie);
     },
     setFavourites: (state, action) => {
-      state.favouriteMovies = action.payload;
+      state.favouriteMovies = action.payload.map((movie) => ({
+        movieId: movie.movieId || Math.random().toString(36).substring(7),
+        title: movie.title || "Unknown Title",
+        imageUrl: movie.imageUrl || "https://via.placeholder.com/150",
+        rating: movie.rating || "N/A", // Default value for rating
+        addedBy: movie.addedBy || "Unknown", // Default value for addedBy
+      }));
     },
   },
 });

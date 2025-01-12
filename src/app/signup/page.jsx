@@ -105,9 +105,7 @@ function Signup() {
         />
         {errors.password && <p className="error-message">{errors.password.message}</p>}
 
-        <button className="submit-button" onClick={()=>{
-          router.push("/login")
-        }}>Register</button>
+        <button className="submit-button" >Register</button>
         <p>
           Already have an account?{" "}
           <a

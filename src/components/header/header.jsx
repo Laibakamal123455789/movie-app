@@ -1,6 +1,6 @@
 "use client"; // If using Next.js 13 and Client Components
 
-import React from "react";
+import React, { useEffect } from "react";
 import "./header.css";
 import Link from "next/link";
 import { Logout } from "@/store/slice/user";

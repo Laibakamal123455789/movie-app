@@ -6,6 +6,7 @@ import axios from "axios";
 import { addToFavourites, setFavourites } from "@/store/slice/moviesFavourite";
 import { useRouter } from "next/navigation";
 import { merastore } from "@/store/store";
+import Image from "next/image";
 
 export default function Page() {
   return (
@@ -16,13 +17,12 @@ export default function Page() {
 }
 
 function Wishlist() {
-
   const { favouriteMovies } = useSelector((state) => state.movieSlice);
   const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
-  
   const dispatch = useDispatch();
   const router = useRouter();
 
+  // Fetch the wishlist on component mount if authenticated
   useEffect(() => {
     if (isAuthenticated) {
       const fetchWishlist = async () => {
@@ -48,8 +48,6 @@ function Wishlist() {
   }, [isAuthenticated, dispatch]);
 
   const handleAddToWishlist = async (movie) => {
-    console.log("Movie to add:", movie);
-
     if (!isAuthenticated) {
       alert("Please log in to add movies to your wishlist.");
       router.push("/login");
@@ -65,24 +63,21 @@ function Wishlist() {
         return;
       }
 
-      const response = await axios.post( "/api/auth/wishlist", { movie }, 
+      const response = await axios.post(
+        "/api/auth/wishlist",
+        { currentMovie: movie },
         {
           headers: {
-            Authorization: `Bearer ${token}`, 
-            "Content-Type": "application/json", 
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
 
-      console.log("Response:", response.data);
-      dispatch(addToFavourites(movie)); // Update the Redux state with new movie
+      dispatch(addToFavourites(movie));
       alert(`${movie.title} added to your wishlist!`);
     } catch (error) {
-      console.error("Error response:", error.response);
-      if (error.response) {
-        console.error("Status code:", error.response.status);
-        console.error("Error data:", error.response.data);
-      }
+      console.error("Error adding movie:", error.response);
       if (error.response && error.response.status === 400) {
         alert("Movie is already in your wishlist.");
       } else if (error.response && error.response.status === 401) {
@@ -94,16 +89,58 @@ function Wishlist() {
   };
 
   return (
-    <div>
-      <h1>Your Wishlist</h1>
-      <ul>
-        {favouriteMovies.map((movie) => (
-          <li key={movie.movieId}>
-            {movie.title}
-            <button onClick={() => handleAddToWishlist(movie)}>Add to Wishlist</button>
-          </li>
-        ))}
-      </ul>
+    <div style={{ padding: "20px" }}>
+      <h1 style={{ textAlign: "center" }}>Your Wishlist</h1>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+          gap: "20px",
+        }}
+      >
+        {favouriteMovies.length > 0 ? (
+          favouriteMovies.map((movie) => (
+            <div
+              key={movie.movieId}
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "10px",
+                padding: "15px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                textAlign: "center",
+              }}
+            >
+              {/* Movie Image */}
+              <Image
+                src={`https://image.tmdb.org/t/p/original${movie.imageUrl}`}
+                alt={movie.title || "No Title Available"}
+                width={150}
+                height={200}
+                unoptimized={true} // Skip image optimization temporarily
+                style={{ borderRadius: "10px", marginBottom: "10px" }}
+                
+              />
+
+              {/* Movie Title */}
+              <h3>{movie.title || "Unknown Title"}</h3>
+
+              {/* Movie Rating */}
+              <p>
+                <strong>Rating:</strong> {movie.rating || "N/A"}
+              </p>
+
+              {/* Added By */}
+              <p>
+                <strong>Added by:</strong> {movie.addedBy || "Unknown"}
+              </p>
+
+            
+            </div>
+          ))
+        ) : (
+          <p>No movies in your wishlist yet.</p>
+        )}
+      </div>
     </div>
   );
 }

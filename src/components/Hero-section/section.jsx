@@ -7,6 +7,7 @@ import {jwtDecode} from "jwt-decode";
 
 import "./HeroSection.css";
 import { BASE_URL, API_KEY } from "@/lib/apiConfig";
+import axios from "axios";
 
 export default function HeroSection() {
   const [movies, setMovies] = useState([]);
@@ -66,15 +67,14 @@ export default function HeroSection() {
 
   const currentMovie = movies[currentMovieIndex];
 
-  const handleAddToList = () => {
+  const handleAddToList = async () => {
     const token = localStorage.getItem("token");
   
     if (token) {
       try {
-        const decodedToken = jwtDecode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2QwYTgxZTZkNTA3NjcxNWMzOTFkNSIsImlhdCI6MTczNjQ5NzM2NX0.gwaQ3cZXJeGeRRV_ucMSeL2ULaU4qcfsfCtB_c8RvkE');
+        const decodedToken = jwtDecode(token);
         console.log("Decoded Token:", decodedToken); // Debugging: log decoded token
-  
-        // Check if token has expired
+
         const currentTime = Math.floor(Date.now() / 1000);
         if (decodedToken.exp && decodedToken.exp < currentTime) {
           alert("Session expired. Please log in again.");
@@ -83,20 +83,34 @@ export default function HeroSection() {
           return;
         }
   
-        // If the token is valid, proceed
-        alert(`${currentMovie.title} added to your wishlist!`);
+        
   
       } catch (error) {
-        // Handle invalid token error
         console.error("Invalid token:", error);
         alert("Invalid session. Please log in.");
         router.push("/login");
       }
     } else {
-      // No token, ask the user to log in or sign up
       alert("Please log in or sign up to add movies to your wishlist.");
       console.log("Redirecting to signup...");
       router.push("/signup");
+    }
+
+    try {
+      const response = await axios.post( "/api/auth/wishlist", { currentMovie }, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+            "Content-Type": "application/json", 
+          },
+        }
+      );
+
+      console.log("Response:", response.data);
+      dispatch(addToFavourites(currentMovie));
+      alert(`${currentMovie.title} added to your wishlist!`);
+    } catch (error) {
+      console.log("ERROR:", error)
     }
   };
   

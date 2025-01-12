@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const userSchema = new mongoose.Schema(
   {
@@ -44,6 +45,18 @@ const userSchema = new mongoose.Schema(
           type: Date,
           default: Date.now,
         },
+        imageUrl: { 
+          type: String,
+           required: false, 
+           default: "https://via.placeholder.com/150"
+            },
+
+        rating:{
+          type:String,
+          required: true
+          
+        }
+
       },
     ],
   },
