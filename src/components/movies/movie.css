@@ -39,7 +39,7 @@
   }
   
   .movie-card {
-    background: #fff;
+    /* background-color: #1a1a1a !important; */
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px;
@@ -57,19 +57,22 @@
   
   .movie-details {
     margin-top: 10px;
+    color: black !important;
   }
   
   .movie-details h3 {
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 5px;
+    color: black !important
   }
   
   .para {
     display: flex;
     justify-content: space-between;
     font-size: 0.9rem;
-    color: #666;
+    color: white !important;
+    
   }
   
   .no-movies {
@@ -77,5 +80,8 @@
     color: #666;
     font-size: 18px;
     margin-top: 20px;
+  }
+  p{
+    color: white !important;
   }
   

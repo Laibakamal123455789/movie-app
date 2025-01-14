@@ -8,6 +8,7 @@ import {jwtDecode} from "jwt-decode";
 import "./HeroSection.css";
 import { BASE_URL, API_KEY } from "@/lib/apiConfig";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function HeroSection() {
   const [movies, setMovies] = useState([]);
@@ -80,6 +81,7 @@ export default function HeroSection() {
           alert("Session expired. Please log in again.");
           console.log("Redirecting to login...");
           router.push("/login");
+          
           return;
         }
   
@@ -91,9 +93,12 @@ export default function HeroSection() {
         router.push("/login");
       }
     } else {
-      alert("Please log in or sign up to add movies to your wishlist.");
+      toast.warning("Please craete account to add movies to your wishlist.")
+      // alert("Please log in or sign up to add movies to your wishlist.");
       console.log("Redirecting to signup...");
       router.push("/signup");
+
+
     }
 
     try {

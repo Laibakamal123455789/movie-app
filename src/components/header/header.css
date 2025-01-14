@@ -1,56 +1,70 @@
-/* Navbar customizations */
-.navbar {
-  padding: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.navbar .navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.navbar-nav {
-  margin-left: 10px;
-}
-
-.navbar-nav .nav-item .nav-link {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-}
-
-.navbar-nav .nav-item .nav-link:hover {
-  background-color: #e9ecef;
-}
-
-.form-inline {
+/* Style for the search form */
+.search-form {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  margin-left: auto;
 }
 
-.form-control {
+.search-form input {
   width: 200px;
-  margin-right: 0.5rem;
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
-.btn-outline-success {
-  border-radius: 20px;
+.search-form button {
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  background-color: #ff1a1a;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-/* For smaller screen devices */
-@media (max-width: 768px) {
-  .form-inline {
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
-  }
+.search-form button:hover {
+  background-color: #e60000;
+}
 
-  .navbar .navbar-brand {
-    font-size: 1.3rem;
-  }
+/* Style for displaying search results */
+.search-results {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
 
-  .navbar-nav {
-    margin-left: 0;
-  }
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  background-color: #222;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+}
+
+.movie-image {
+  width: 100%;
+  border-radius: 10px;
+  max-height: 250px;
+  object-fit: cover;
+}
+
+.movie-card h5 {
+  font-size: 0.8rem;
+  margin-top: 10px;
+  color:black;
+}
+
+.movie-card p {
+  font-size: 0.9rem;
+  color:black;
+
 }

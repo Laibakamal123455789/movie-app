@@ -9,7 +9,9 @@ export async function POST(req) {
   const data = await req.json();
   try {
     const user = await User.findOne({ email: data.email });
+
       if (!user) {
+
         return NextResponse.json({ success: false, message: "Invalid email or password" });
       }
 
@@ -24,8 +26,7 @@ export async function POST(req) {
         },
         JWT_SECRET
       )
-      
-
+     
     return NextResponse.json({ success: true, token, user });
   } catch (error) {
     console.error("Login Error:", error);

@@ -34,6 +34,8 @@ function Signup() {
       console.log("Response from the server:", response.data);
 
       if (response.data.success) {
+        localStorage.setItem("token", response.data.token);
+
         dispatch(addUser(response.data.user));
         reset();
         router.push("/");

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import "./movie.css";
+import "./style.css"
 import Movie from "@/components/movies/movie";
 const API_KEY = "62ba84da719c3812b6d078e3f7c2e4f1";
 

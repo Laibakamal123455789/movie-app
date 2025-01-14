@@ -7,6 +7,7 @@ import { addToFavourites, setFavourites } from "@/store/slice/moviesFavourite";
 import { useRouter } from "next/navigation";
 import { merastore } from "@/store/store";
 import Image from "next/image";
+import "./fav.css";
 
 export default function Page() {
   return (
@@ -22,7 +23,6 @@ function Wishlist() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Fetch the wishlist on component mount if authenticated
   useEffect(() => {
     if (isAuthenticated) {
       const fetchWishlist = async () => {
@@ -89,56 +89,28 @@ function Wishlist() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1 style={{ textAlign: "center" }}>Your Wishlist</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: "20px",
-        }}
-      >
+    <div className="wishlist-container">
+      <h1 className="wishlist-header">Your Wishlist</h1>
+      <div className="movie-grid">
         {favouriteMovies.length > 0 ? (
           favouriteMovies.map((movie) => (
-            <div
-              key={movie.movieId}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "10px",
-                padding: "15px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                textAlign: "center",
-              }}
-            >
-              {/* Movie Image */}
+            <div key={movie.movieId} className="movie-card">
               <Image
                 src={`https://image.tmdb.org/t/p/original${movie.imageUrl}`}
                 alt={movie.title || "No Title Available"}
                 width={150}
                 height={200}
-                unoptimized={true} // Skip image optimization temporarily
-                style={{ borderRadius: "10px", marginBottom: "10px" }}
-                
+                unoptimized={true}
+                className="movie-image"
               />
-
-              {/* Movie Title */}
-              <h3>{movie.title || "Unknown Title"}</h3>
-
-              {/* Movie Rating */}
-              <p>
-                <strong>Rating:</strong> {movie.rating || "N/A"}
+              <h3 className="movie-title">{movie.title || "Unknown Title"}</h3>
+              <p className="movie-details">
+                <strong>USER:</strong> {movie.addedBy || "Unknown"}
               </p>
-
-              {/* Added By */}
-              <p>
-                <strong>Added by:</strong> {movie.addedBy || "Unknown"}
-              </p>
-
-            
             </div>
           ))
         ) : (
-          <p>No movies in your wishlist yet.</p>
+          <p className="empty-wishlist-message">No movies in your wishlist yet.</p>
         )}
       </div>
     </div>

@@ -36,7 +36,7 @@ export async function GET(req) {
           movieId: movie._id ,
           title: movie.title || "Unknown Title",
           imageUrl: movie.imageUrl || "https://via.placeholder.com/150",
-          rating: movie.rating || "N/A",
+         
           addedBy: await getUsersWhoFavoritedMovie(movie._id),
         };
       })
@@ -102,7 +102,7 @@ console.log(movie.backdrop_path)
       movieId: movie.movieId,
       title: movie.title || "Unknown Title",
       imageUrl: String(movie.backdrop_path),
-      rating: movie.rating || "N/A",
+     
       addedBy: user.name || "Unknown",
     });
 

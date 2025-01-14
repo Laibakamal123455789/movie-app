@@ -14,7 +14,6 @@ export default function ActionMovies({ genre, apiKey }) {
     setMovies(data.results);
     setLoading(false);
   };
-
   useEffect(() => {
     fetchMovies();
   }, []);
