@@ -4,17 +4,25 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Slider from "react-slick";
 import {jwtDecode} from "jwt-decode";
-
 import "./HeroSection.css";
 import { BASE_URL, API_KEY } from "@/lib/apiConfig";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Provider, useDispatch } from "react-redux";
+import { merastore } from "@/store/store";
+import { addToFavourites } from "@/store/slice/moviesFavourite";
 
-export default function HeroSection() {
+export default function Page(){
+  return <Provider store={merastore}>
+    <HeroSection/>
+  </Provider>
+}
+function HeroSection() {
   const [movies, setMovies] = useState([]);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState(null);
+  let dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -22,7 +30,7 @@ export default function HeroSection() {
     try {
       const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
       const data = await response.json();
-      setMovies(data.results.slice(0, 10));
+      setMovies(data.results.slice(0, 20));
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
@@ -74,7 +82,7 @@ export default function HeroSection() {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("Decoded Token:", decodedToken); // Debugging: log decoded token
+        console.log("Decoded Token:", decodedToken); 
 
         const currentTime = Math.floor(Date.now() / 1000);
         if (decodedToken.exp && decodedToken.exp < currentTime) {
@@ -84,38 +92,39 @@ export default function HeroSection() {
           
           return;
         }
+
+        const response = await axios.post( "/api/auth/wishlist", { currentMovie }, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+              "Content-Type": "application/json", 
+            },
+            
+          }
+        
+        );
+  
+        console.log("Response:", response.data);
+        dispatch(addToFavourites(currentMovie));
+        alert(`${currentMovie.title} added to your wishlist!`);
   
         
   
       } catch (error) {
         console.error("Invalid token:", error);
-        alert("Invalid session. Please log in.");
+        toast.error("An error occurred while adding the movie to your wishlist.");
         router.push("/login");
+      
       }
-    } else {
+    } 
+    
+    else {
       toast.warning("Please craete account to add movies to your wishlist.")
-      // alert("Please log in or sign up to add movies to your wishlist.");
+      alert("Please log in or sign up to add movies to your wishlist.");
       console.log("Redirecting to signup...");
       router.push("/signup");
 
 
-    }
-
-    try {
-      const response = await axios.post( "/api/auth/wishlist", { currentMovie }, 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-            "Content-Type": "application/json", 
-          },
-        }
-      );
-
-      console.log("Response:", response.data);
-      dispatch(addToFavourites(currentMovie));
-      alert(`${currentMovie.title} added to your wishlist!`);
-    } catch (error) {
-      console.log("ERROR:", error)
     }
   };
   

@@ -29,7 +29,7 @@ export async function GET(req) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // Ensure all movies have complete data
+   
     const moviesWithDefaults = await Promise.all(
       user.favouriteMovies.map(async (movie) => {
         return {
@@ -82,7 +82,6 @@ export async function POST(req) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // Check if the movie is already in the wishlist
     console.log(user.favouriteMovies);
     if (user.favouriteMovies.length) {
       const isAlreadyAdded = user.favouriteMovies.some(
@@ -131,7 +130,7 @@ const getUsersWhoFavoritedMovie = async (movieId) => {
           $elemMatch: { _id: movieId },
         },
       },
-      { firstName: 1, lastName: 1, _id: 0 } // Project only firstName and lastName
+      { firstName: 1, lastName: 1, _id: 0 } 
     );
     
     const userNames = users.map((user) => `${user.firstName} ${user.lastName}`)
